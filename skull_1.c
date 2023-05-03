@@ -220,11 +220,9 @@ int main() {
         picture3[i * w + j + 2] = 70 + picture2[i * w + j ];
         picture3[i * w + j + 3] = 255;
     }*/
-    printf("ready");
 
     char * new_image = "scull-modified.png";
     writePng(new_image, picture3, w, h);
-    printf("hey");
 
     //free(new_image);
     //free(picture1);
