@@ -38,15 +38,6 @@ void writePng(const char* filename, const unsigned char* image, unsigned width, 
 }
 
 
-void GaussFilter(unsigned char * picture, unsigned char * result, int w, int height) {
-    int i,j;
-    for(i = 1; i < 4*height - 1; i++)
-    for (j = 1; j < w - 1; j++)
-        result[i * w + j] = 0.0924 * picture[(i-1) * w + (j-1)] + 0.1192 * picture[(i-1) * w + j] + 0.0924 * picture[(i-1) * w + (j+1)] + 0.1192 * picture[i * w + (j-1)] + 0.1538 * picture[i * w + j] + 0.1192 * picture[i * w + (j+1)] + 0.0924 * picture[(i+1) * w + (j-1)] + 0.1192 * picture[(i+1) * w + j] + 0.0924 * picture[(i+1) * w + (j+1)];
-    return;
-}
-
-
 int main() {
 
     char * filename = "skull.png";
@@ -76,16 +67,7 @@ int main() {
         picture1[4 * w * i + 4 * j + 1] = 0.3*r + 0.59*g + 0.1*b;
         picture1[4 * w * i + 4 * j + 2] = 0.3*r + 0.59*g + 0.1*b;
     }
-    /*int k = 0;
-    for (i=0; i < 4*w*h; i++)
-        picture1[k++] = (picture[i] + picture[i+1] + picture[i+2])/3;
-
-    /*for (i=0; i < 4*h; i++)
-    for (j=0; j < w; j++) {
-        if (picture1[i * w + j] < 100) picture1[i * w + j] = 0;
-        if (picture1[i * w + j] > 150) picture1[i * w + j] = 255;
-    }
-*/
+ 
 
     for (i = 0; i < h; i++)
     for (j = 0; j < w; j++) {
@@ -108,40 +90,6 @@ int main() {
 
     picture2 = picture1;
 
-    //GaussFilter(picture1,picture2,w,h);
-
-    /*for(i = 4; i < 4*h-4; i++)
-    for (j = 0; j < w; j++) {
-        picture2[i * w + j] = (-2) * picture1[(i-4) * w + (j-1)];
-        picture2[i * w + j] += (-1) * picture1[(i-4) * w + j];
-        picture2[i * w + j] += (-2) * picture1[(i-4) * w + (j+1)];
-        picture2[i * w + j] += (-1) * picture1[i * w + (j-1)];
-        picture2[i * w + j] += (17) * picture1[i * w + j];
-        picture2[i * w + j] += (-1) * picture1[i * w + (j+1)];
-        picture2[i * w + j] += (-2) * picture1[(i+4) * w + (j-1)];
-        picture2[i * w + j] += (-1) * picture1[(i+4) * w + j];
-        picture2[i * w + j] += (-2) * picture1[(i+4) * w + (j+1)];
-    }*/
-
-    /*for(i = 4; i < 4*h-4; i++)
-    for (j = 0; j < w; j++) {
-        picture2[i * w + j] = (0.0924) * picture1[(i-4) * w + (j-1)];
-        picture2[i * w + j] += (0.1192) * picture1[(i-4) * w + j];
-        picture2[i * w + j] += (0.0924) * picture1[(i-4) * w + (j+1)];
-        picture2[i * w + j] += (0.1192) * picture1[i * w + (j-1)];
-        picture2[i * w + j] += (0.1538) * picture1[i * w + j];
-        picture2[i * w + j] += (0.1192) * picture1[i * w + (j+1)];
-        picture2[i * w + j] += (0.0924) * picture1[(i+4) * w + (j-1)];
-        picture2[i * w + j] += (0.1192) * picture1[(i+4) * w + j];
-        picture2[i * w + j] += (0.0924) * picture1[(i+4) * w + (j+1)];
-    }
-
-    /*picture1 = picture2;
-    int l = 0;
-    for (i=0; i < 4*w*h; i++)
-        picture1[l++] = 0.2 * picture2[i] + 0.6 * picture2[i+1] + 0.114 * picture2[i+2];
-*/
-
     int q;
     for (i = 1; i < h - 1; i++)
     for (j = 1; j < w - 1; j++)
@@ -158,40 +106,6 @@ int main() {
 
     }
 
-    /*int x,y;
-    double G[3][3];
-    G[0][0] = 0.0924;
-    G[0][1] = 0.1192;
-    G[0][2] = 0.0924;
-    G[1][0] = 0.1192;
-    G[1][1] = 0.1538;
-    G[1][2] = 0.1192;
-    G[2][0] = 0.0924;
-    G[2][1] = 0.1192;
-    G[2][2] = 0.0924;
-
-    for (i = 0; i < w; i++)
-        for (j = 0; j < h; j++)
-            for (x = -1; x <= 1; x++)
-                for (y = -1; y <= 1; y++)
-                    picture2[(i + x) * h + j + y] += G[2 - x][2 - y];*/
-
-
-
-
-    /*double x,y;
-    for(i = 1; i < h - 1; i++)
-    for (j = 1; j < w - 1; j++) {
-        x = (-1) * picture1[(i-1)*w+(j-1)] - 2*picture1[i*w+(j-1)] - 1 * picture1[(i+1)*w+(j-1)] + picture1[(i-1)*w+j+1] + 2*picture1[i*w+j+1] + picture1[(i+1)*w+j+1];
-        y = (-1)*picture1[(i-1)*w+j-1] - 2*picture1[(i-1)*w+j] - picture1[(i-1)*w+j+1] + picture1[(i+1)*w+j-1] + 2*picture1[(i+1)*w+j] + picture1[(i+1)*w+j+1];
-        picture2[i*w+j] = sqrt(x*x+y*y);
-    }*/
-/*
-    for (i=w+1; i < 4 * w * h - w - 1; i++) {
-        picture2[i] = 0.09 * picture1[i-w-1] + 0.1192 * picture1[i-w] + 0.09 * picture1[i-w+1] + 0.1192 * picture1[i-1] + 0.1538 * picture1[i] + 0.1192 * picture1[i+1] + 0.09 * picture1[i+w-1] + 0.1192 * picture1[i+w] + 0.09 * picture1[i+w+1];
-
-    }
-    */
     picture3 = picture2;
 
     for ( i = 1; i < h; i++)
@@ -202,32 +116,13 @@ int main() {
         picture3[4 * i * w + 4 * j + 3] = 255;
     }
 
-    /*int c[w*h];
-    for(i = 0; i < w*h; i++)
-        c[i] = picture2[i];*/
-
-    /*for (i = 1; i < 4 * w * h - 4; i+=4) {
-        picture3[i] = 30 + picture2[i] + 0.5 * picture2[i-1];
-        picture3[i+1] = 25 + picture2[i] + 0.2*picture2[i-1];
-        picture3[i+2] = 170 + picture2[i];
-        picture3[i+4] = 255;
-    }
-
-    /*for(i = 0; i < h - 1; i++)
-    for (j = 0; j < w - 1; j++) {
-        picture3[i * w + j + 0] = 30 + picture2[i * w + j ];
-        picture3[i * w + j + 1] = 25 + picture2[i * w + j ];
-        picture3[i * w + j + 2] = 70 + picture2[i * w + j ];
-        picture3[i * w + j + 3] = 255;
-    }*/
-
     char * new_image = "scull-modified.png";
     writePng(new_image, picture3, w, h);
 
-    //free(new_image);
-    //free(picture1);
-    //free(picture2);
-    //free(picture3);
+    free(new_image);
+    free(picture1);
+    free(picture2);
+    free(picture3);
 
     return 0;
 }
